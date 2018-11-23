@@ -1,0 +1,19 @@
+{
+  "name": "wtf-version",
+  "version": "0.1.0",
+  "description": "Uses git history to derive a semantic version number.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchdenny/wtf-version.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitchdenny/wtf-version/issues"
+  },
+  "homepage": "https://github.com/mitchdenny/wtf-version#readme"
+}
