@@ -1,19 +1,28 @@
 {
-  "name": "wtf-version",
-  "version": "0.1.0",
-  "description": "Uses git history to derive a semantic version number.",
-  "main": "index.js",
+  "name": "git2semver",
+  "version": "0.0.0",
+  "description": "Uses a series of Git command-line invocations to generate a semantic version number based on commit messages and tags.",
+  "main": "src/index.js",
+  "bin": {
+    "git2semver": "./src/cli.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mitchdenny/wtf-version.git"
+    "url": "git+https://github.com/mitchdenny/git2semver.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Mitch Denny <mitch@mitchdenny.com> (https://mitchdenny.com/)",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mitchdenny/wtf-version/issues"
+    "url": "https://github.com/mitchdenny/git2semver/issues"
   },
-  "homepage": "https://github.com/mitchdenny/wtf-version#readme"
+  "homepage": "https://github.com/mitchdenny/git2semver#readme",
+  "dependencies": {
+    "semver": "^5.6.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
 }

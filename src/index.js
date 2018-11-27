@@ -1,5 +1,9 @@
 const {spawn} = require('child_process');
 const semver = require('semver');
+const fs = require('fs');
+const path = require('path');
+const {promisify} = require('util');
+const accessAsync = promisify(fs.access);
 
 class Commit {
     constructor(hash, message, branch) {
@@ -107,11 +111,22 @@ class Repository {
     
         return commits;
     }
+
+    async getRepositoryRootPath() {
+
+        if (this.repositoryRootPath == undefined) {
+            const command = new Command('git rev-parse --show-toplevel', this.repositoryPath);
+            const output = await command.getStdout();
+            this.repositoryRootPath = output.split('\n')[0];    
+        }
+
+        return this.repositoryRootPath;
+    }
 }
 
 class Policy {
-    constructor(version) {
-        this.result = version;
+    constructor(latestTag) {
+        this.result = latestTag.version;
     }
 
     incrementMajorWhen(predicate) {
@@ -151,14 +166,52 @@ class Policy {
     }
 }
 
-class Detector {
-    async detectVersion(repositoryPath, configuration) {
+class PolicyLoader {
+    constructor(repositoryPath, configuration, latestTag) {
+        this.repositoryPath = repositoryPath;
+        this.configuration = configuration;
+        this.latestTag = latestTag;
+    }
+
+    async applyConfigurationInRepositoryOrUseDefault() {
+        const configurationFilePathByConvention = path.resolve(this.repositoryPath, 'git2semver.config.js');
+        try {
+            await accessAsync(configurationFilePathByConvention, fs.constants.R_OK);
+        } catch {
+            this.configuration = (policy) => {
+                policy.useMainline();
+            };
+        }
+
+        this.configuration = require(configurationFilePathByConvention);
+    }
+
+    async getPolicy() {
+        const policy = new Policy(this.latestTag);
+
+        if (this.configuration instanceof Function) {
+            this.configuration(policy);
+        } else if (this.configuration == null || this.configuration == undefined) {
+            await this.applyConfigurationInRepositoryOrUseDefault();
+            this.configuration(policy);
+        } else if (this.configuration.toLowerCase() == "mainline") {
+            policy.useMainline();
+        } 
+
+        return policy;
+    }
+}
+
+module.exports = {
+    async getVersion(repositoryPath, configuration) {
         const repository = new Repository(repositoryPath);
+        const repositoryRootPath = await repository.getRepositoryRootPath();
+
         const latestTag = await repository.getLatestVersionTag();
         const commits = await repository.getCommitsSinceTag(latestTag);
 
-        const policy = new Policy(latestTag);
-        configuration(policy);
+        const policyLoader = new PolicyLoader(repositoryRootPath, configuration, latestTag);
+        const policy = await policyLoader.getPolicy();
 
         for (let index = 0; index < commits.length; index++) {
             const commit = commits[index];
@@ -168,5 +221,3 @@ class Detector {
         return policy.result; 
     }
 }
-
-module.exports = new Detector();
