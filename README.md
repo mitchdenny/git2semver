@@ -95,11 +95,7 @@ Contributions are welcome in the form of pull requests with new features, issues
 
 Once your PR is approved and merged the code will automatically be packaged, tested (again) and published to NPM.
 
-## Links
-
-Even though this information can be found inside the project on machine-readable
-format like in a .json file, it's good to include a summary of most useful
-links to humans using your project. You can include links like:
+## Resources
 
 - Repository: https://github.com/mitchdenny/git2semver/
 - Issue tracker: https://github.com/mitchdenny/git2semver/issues
