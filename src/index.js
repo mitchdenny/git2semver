@@ -206,6 +206,7 @@ module.exports = {
     async getVersion(repositoryPath, configuration) {
         const repository = new Repository(repositoryPath);
         const repositoryRootPath = await repository.getRepositoryRootPath();
+        console.log(repositoryRootPath);
 
         const latestTag = await repository.getLatestVersionTag();
         const commits = await repository.getCommitsSinceTag(latestTag);
