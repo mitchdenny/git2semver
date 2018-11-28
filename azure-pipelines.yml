@@ -19,4 +19,5 @@ steps:
     npm link
     export SEMVER=`git2semver`
     echo "##vso[build.updatebuildnumber]$SEMVER ($BUILD_BUILDID)"
+    npm pack git2semver-$SEMVER.tgz
   displayName: 'npm install and test'
