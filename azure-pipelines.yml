@@ -22,3 +22,7 @@ steps:
     npm version $SEMVER --no-git-tag-version
     npm pack
   displayName: 'npm ci, test and pack'
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: drop
+    targetPath: $(Build.SourcesDirectory)
