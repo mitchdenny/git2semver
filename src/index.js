@@ -32,6 +32,7 @@ class Command {
             });
     
             childProcess.once('exit', (code, signal) => {
+               console.log(`STDOUT FROM GIT2SEMVER: ${output}`);
                 if (code != 0) {
                     reject('Non-zero exit');
                 } else {
@@ -206,9 +207,10 @@ module.exports = {
     async getVersion(repositoryPath, configuration) {
         const repository = new Repository(repositoryPath);
         const repositoryRootPath = await repository.getRepositoryRootPath();
-        console.log(repositoryRootPath);
 
         const latestTag = await repository.getLatestVersionTag();
+        console.log(latestTag);
+
         const commits = await repository.getCommitsSinceTag(latestTag);
 
         const policyLoader = new PolicyLoader(repositoryRootPath, configuration, latestTag);
