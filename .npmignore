@@ -1,2 +1,6 @@
 test
 demo
+.gitattributes
+azure-pipelines.yml
+git2semver.config.js
+images
