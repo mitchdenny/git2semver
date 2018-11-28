@@ -17,6 +17,6 @@ steps:
     npm install
     npm test
     npm link
-    export semver=`git2semver`
-    echo "##vso[build.updatebuildnumber]$Build.BuildNumber_$semver"
+    export SEMVER=`git2semver`
+    echo "##vso[build.updatebuildnumber]$SEMVER ($BUILD_BUILDID)"
   displayName: 'npm install and test'
