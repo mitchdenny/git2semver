@@ -16,7 +16,7 @@ steps:
     set -e
     npm install
     npm test
-    npm linkdas
+    npm link
     export semver=`git2semver`
     echo "##vso[build.updatebuildnumber]$Build.BuildNumber_$semver"
   displayName: 'npm install and test'
