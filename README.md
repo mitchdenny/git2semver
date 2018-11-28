@@ -3,6 +3,8 @@
 # git2semver
 > Generate a SemVer compliant version from the Git commit log.
 
+[![Build Status](https://dev.azure.com/mitchdenny/git2semver/_apis/build/status/mitchdenny.git2semver)](https://dev.azure.com/mitchdenny/git2semver/_build/latest?definitionId=39)
+
 Use git2semver to generate a SemVer 2.0 compliant version string from the Git
 commit log. This tool is a low depenency module that shells out to Git and
 processes its output to do its job so you don't have to worry about having
