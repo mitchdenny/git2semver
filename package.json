@@ -1,6 +1,6 @@
 {
   "name": "git2semver",
-  "version": "2.0.0",
+  "version": "0.0.0",
   "description": "Uses a series of Git command-line invocations to generate a semantic version number based on commit messages and tags.",
   "main": "src/index.js",
   "bin": {

@@ -19,6 +19,6 @@ steps:
     npm link
     export SEMVER=`git2semver`
     echo "##vso[build.updatebuildnumber]$SEMVER ($BUILD_BUILDID)"
-    npm version $SEMVER
+    npm version $SEMVER --no-git-tag-version
     npm pack
   displayName: 'npm ci, test and pack'
