@@ -13,9 +13,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    set -e
     npm install
     npm test
-    npm link
+    npm linkdas
     export semver=`git2semver`
-    echo "##vso[build.updatebuildnumber]$semver"
+    echo "##vso[build.updatebuildnumber]$Build.BuildNumber_$semver"
   displayName: 'npm install and test'
