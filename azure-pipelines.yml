@@ -14,10 +14,11 @@ steps:
 
 - script: |
     set -e
-    npm install
+    npm ci
     npm test
     npm link
     export SEMVER=`git2semver`
     echo "##vso[build.updatebuildnumber]$SEMVER ($BUILD_BUILDID)"
-    npm pack git2semver@$SEMVER
-  displayName: 'npm install and test'
+    npm version $SEMVER
+    npm pack
+  displayName: 'npm ci, test and pack'
