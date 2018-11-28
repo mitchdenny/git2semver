@@ -32,7 +32,6 @@ class Command {
             });
     
             childProcess.once('exit', (code, signal) => {
-               console.log(`STDOUT FROM GIT2SEMVER: ${output}`);
                 if (code != 0) {
                     reject('Non-zero exit');
                 } else {
@@ -171,7 +170,8 @@ class PolicyLoader {
     constructor(repositoryPath, configuration, latestTag) {
         this.repositoryPath = repositoryPath;
         this.configuration = configuration;
-        this.latestTag = latestTag;
+
+        this.latestTag = latestTag == null ? semver.parse('0.0.0') : latestTag;
     }
 
     async applyConfigurationInRepositoryOrUseDefault() {
@@ -209,7 +209,6 @@ module.exports = {
         const repositoryRootPath = await repository.getRepositoryRootPath();
 
         const latestTag = await repository.getLatestVersionTag();
-        console.log(latestTag);
 
         const commits = await repository.getCommitsSinceTag(latestTag);
 
