@@ -14,7 +14,6 @@ steps:
 
 - script: |
     npm install
-    npm test
     npm link
     git2semver
   displayName: 'npm install and test'
