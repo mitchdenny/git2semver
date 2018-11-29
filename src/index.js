@@ -178,13 +178,12 @@ class PolicyLoader {
         const configurationFilePathByConvention = path.resolve(this.repositoryPath, 'git2semver.config.js');
         try {
             await accessAsync(configurationFilePathByConvention, fs.constants.R_OK);
+            this.configuration = require(configurationFilePathByConvention);
         } catch {
             this.configuration = (policy) => {
                 policy.useMainline();
             };
         }
-
-        this.configuration = require(configurationFilePathByConvention);
     }
 
     async getPolicy() {
