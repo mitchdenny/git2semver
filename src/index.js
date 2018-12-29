@@ -126,7 +126,13 @@ class Repository {
 
 class Policy {
     constructor(latestTag) {
-        this.result = latestTag.version;
+        this.result = latestTag;
+        this.formatters = {
+            "default": (result) => result.version,
+            "majorminorpatch": (result) => result.version,
+            "majorminorpatch-pipelines": (result) => `##vso[build.updatebuildnumber]${result.version}`
+        };
+        this.selectedFormatter = this.formatters.default;
     }
 
     incrementMajorWhen(predicate) {
@@ -150,13 +156,29 @@ class Policy {
     }
 
     applyCommit (commit) {
+        let output = this.result;
+
         if (this.incrementMajorWhenPredicate != null && this.incrementMajorWhenPredicate(commit)) {
-            this.result = semver.inc(this.result, 'major');
+            output = semver.inc(output, 'major');
         } else if (this.incrementMinorWhenPredicate != null && this.incrementMinorWhenPredicate(commit)) {
-            this.result = semver.inc(this.result, 'minor');
+            output = semver.inc(output, 'minor');
         } else if (this.incrementPatchWhenPredicate != null && this.incrementPatchWhenPredicate(commit)) {
-            this.result = semver.inc(this.result, 'patch');
+            output = semver.inc(output, 'patch');
         }
+
+        this.result = semver.parse(output);
+    }
+
+    useFormatter(formatter) {
+        if (typeof(formatter) === "function") {
+            this.selectedFormatter = formatter;
+        } else {
+            this.selectedFormatter = this.formatters[formatter];
+        }
+    }
+
+    applyFormat () {
+        return this.selectedFormatter(this.result);
     }
 
     clear() {
@@ -203,7 +225,8 @@ class PolicyLoader {
 }
 
 module.exports = {
-    async getVersion(repositoryPath, configuration) {
+    async getVersion(repositoryPath, configuration, formatter) {
+        
         const repository = new Repository(repositoryPath);
         const repositoryRootPath = await repository.getRepositoryRootPath();
 
@@ -213,12 +236,17 @@ module.exports = {
 
         const policyLoader = new PolicyLoader(repositoryRootPath, configuration, latestTag);
         const policy = await policyLoader.getPolicy();
+        
+        if (formatter != "default" && formatter != undefined) {
+            policy.useFormatter(formatter);
+        }
 
         for (let index = 0; index < commits.length; index++) {
             const commit = commits[index];
             policy.applyCommit(commit);
         }
 
-        return policy.result; 
+        const output = policy.applyFormat();
+        return output;
     }
 }

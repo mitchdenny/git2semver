@@ -17,9 +17,9 @@ steps:
     npm ci
     npm test
     npm link
-    export SEMVER=`git2semver`
-    echo "##vso[build.updatebuildnumber]$SEMVER ($BUILD_BUILDID)"
-    npm version $SEMVER --no-git-tag-version
+    git2semver
+- script: |
+    npm version $BUILD_BUILDNUMBER --no-git-tag-version
   displayName: 'npm ci, test and pack'
 - task: PublishPipelineArtifact@0
   inputs:
