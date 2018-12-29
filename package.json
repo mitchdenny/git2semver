@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/mitchdenny/git2semver#readme",
   "dependencies": {
+    "commander": "^2.19.0",
     "semver": "^5.6.0"
   },
   "devDependencies": {
