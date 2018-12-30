@@ -1,4 +1,4 @@
 module.exports = (policy) => {
     policy.useMainline('major:', 'minor:', 'patch:');
-    policy.useFormatter("majorminorpatch-pipelines");
+    policy.useFormatter((result) => `##vso[build.updatebuildnumber]${result.version}`);
 };
