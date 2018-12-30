@@ -8,7 +8,7 @@
 Use git2semver to generate a SemVer 2.0 compliant version string from the Git
 commit log. This tool is a low depenency module that shells out to Git and
 processes its output to do its job so you don't have to worry about having
-anything other than Node.js and Git installed.
+anything other than Node.js and Git installed. Read the [introductory blog post](https://mitchdenny.com/git2semver/) for an overview.
 
 ## Command-line usage
 
