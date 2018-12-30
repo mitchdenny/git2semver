@@ -203,7 +203,7 @@ class PolicyLoader {
             this.configuration = require(configurationFilePathByConvention);
         } catch {
             this.configuration = (policy) => {
-                policy.useMainline();
+                policy.useMainline('major:', 'minor:', 'patch:');
             };
         }
     }
