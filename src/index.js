@@ -130,7 +130,8 @@ class Policy {
         this.formatters = {
             "default": (result) => result.version,
             "majorminorpatch": (result) => result.version,
-            "majorminorpatch-pipelines": (result) => `##vso[build.updatebuildnumber]${result.version}`
+            "majorminorpatch-pipelines": (result) => `##vso[build.updatebuildnumber]${result.version}`,
+            "raw": (result) => result
         };
         this.selectedFormatter = this.formatters.default;
     }
