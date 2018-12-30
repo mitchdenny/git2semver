@@ -1,8 +1,3 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 pool:
   vmImage: 'Ubuntu 16.04'
 
@@ -17,7 +12,7 @@ steps:
     npm ci
     npm test
     npm link
-    git2semver
+    git2semver --formatter majorminorpatch-pipelines-variables-and-label
 - script: |
     npm version $BUILD_BUILDNUMBER --no-git-tag-version
   displayName: 'npm ci, test and pack'
