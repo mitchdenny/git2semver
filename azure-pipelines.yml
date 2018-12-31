@@ -9,6 +9,7 @@ steps:
 
 - script: |
     set -e
+    npm audit
     npm ci
     npm test
     npm link
