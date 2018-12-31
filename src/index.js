@@ -131,8 +131,8 @@ class Policy {
             "default": (result) => result.version,
             "majorminorpatch": (result) => result.version,
             "majorminorpatch-pipelines-label": (result) => `##vso[build.updatebuildnumber]${result.version}`,
-            "majorminorpatch-pipelines-variables": (result) => `##vso[task.setvariable variable=GIT2SEMVER_MAJOR]${result.major}\n##vso[task.setvariable variable=GIT2SEMVER_MINOR]${result.minor}\n##vso[task.setvariable variable=GIT2SEMVER_PATCH]${result.patch}`,
-            "majorminorpatch-pipelines-variables-and-label": (result) => `##vso[build.updatebuildnumber]${result.version}\n##vso[task.setvariable variable=GIT2SEMVER_MAJOR]${result.major}\n##vso[task.setvariable variable=GIT2SEMVER_MINOR]${result.minor}\n##vso[task.setvariable variable=GIT2SEMVER_PATCH]${result.patch}`,
+            "majorminorpatch-pipelines-variables": (result) => `##vso[task.setvariable variable=GIT2SEMVER_MAJOR]${result.major}\n##vso[task.setvariable variable=GIT2SEMVER_MINOR]${result.minor}\n##vso[task.setvariable variable=GIT2SEMVER_PATCH]${result.patch}\n##vso[task.setvariable variable=GIT2SEMVER_MAJORMINORPATCH]${result.major}.${result.minor}.${result.patch}`,
+            "majorminorpatch-pipelines-variables-and-label": (result) => `##vso[build.updatebuildnumber]${result.version}\n##vso[task.setvariable variable=GIT2SEMVER_MAJOR]${result.major}\n##vso[task.setvariable variable=GIT2SEMVER_MINOR]${result.minor}\n##vso[task.setvariable variable=GIT2SEMVER_PATCH]${result.patch}\n##vso[task.setvariable variable=GIT2SEMVER_MAJORMINORPATCH]${result.major}.${result.minor}.${result.patch}`,
             "raw": (result) => result
         };
         this.selectedFormatter = this.formatters.default;
